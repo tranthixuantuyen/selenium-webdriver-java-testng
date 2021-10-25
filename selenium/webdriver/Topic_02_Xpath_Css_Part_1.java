@@ -10,37 +10,46 @@ import org.testng.annotations.AfterClass;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 
-public class Topic_01_CheckEnvironment {
+public class Topic_02_Xpath_Css_Part_1 {
 	WebDriver driver;
 
 	@BeforeClass
 	public void beforeClass() {
 		driver = new FirefoxDriver();
 		driver.manage().timeouts().implicitlyWait(30, TimeUnit.SECONDS);
-		driver.manage().window().maximize();
-		driver.get("http://demo.guru99.com/v4/");
+		driver.get("https://demo.nopcommerce.com/register?returnUrl=%2F");
 	}
 
 	@Test
-	public void TC_01_ValidateCurrentUrl() {
-		// Login Page Url matching
-		String loginPageUrl = driver.getCurrentUrl();
-		Assert.assertEquals(loginPageUrl, "http://demo.guru99.com/v4/");
+	public void TC_01_ID() {
+		//Để thao tác vs 1 element ở trên page
+		driver.findElement(By.id("FirstName")).sendKeys("Automation Testing");
+		driver.findElement(By.id("Email")).sendKeys("automationtest@gmail.com");
 	}
 
 	@Test
-	public void TC_02_ValidatePageTitle() {
-		// Login Page title
-		String loginPageTitle = driver.getTitle();
-		Assert.assertEquals(loginPageTitle, "Guru99 Bank Home Page");
+	public void TC_02_Classname() {
+		driver.findElement(By.className("search-box-text")).sendKeys("Macbook");
 	}
 
 	@Test
-	public void TC_03_LoginFormDisplayed() {
-		// Login form displayed
-		Assert.assertTrue(driver.findElement(By.xpath("//form[@name='frmLogin']")).isDisplayed());
+	public void TC_03_Name() {
+		driver.findElement(By.name("Company")).sendKeys("Selenium");
 	}
-
+	@Test
+	public void TC_04_Tagname() {
+		// Dùng khi đếm số lượng elements trên màn hình
+		//findElement = 1 element - số ít
+		//findElements = nhiều element - số nhiều
+		System.out.println(driver.findElements(By.tagName("select")).size() );
+	}
+	@Test
+	public void TC_05_Link_Text() {
+		Assert.assertTrue(driver.findElement(By.linkText("Register")).isDisplayed());
+	}
+	public void TC_06_Partial_Link_Text() {
+		Assert.assertTrue(driver.findElement(By.partialLinkText("Digital")).isDisplayed());
+	}
 	@AfterClass
 	public void afterClass() {
 		driver.quit();
